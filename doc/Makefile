@@ -1,13 +1,13 @@
 .SUFFIXES: .xml .html .txt .adoc .1
 
-# .xml.html:
-#	xmlto xhtml-nochunks $<
+.xml.html:
+	xmlto --skip-validation xhtml-nochunks $<
 
 .xml.1:
-	xmlto man $<
+	xmlto --skip-validation man $<
 
 .xml.txt:
-	xmlto txt $<
+	xmlto --skip-validation txt $<
 
 .adoc.html:
 	asciidoc $<

@@ -62,7 +62,8 @@ UTILS = $(INSTALLABLE) \
 LDLIBS=libgif.a -lm
 
 all: libgif.so libgif.a libutil.so libutil.a $(UTILS)
-	$(MAKE) -C doc
+
+docs: $(MAKE) -C doc
 
 $(UTILS):: libgif.a libutil.a
 
@@ -89,7 +90,8 @@ check: all
 
 # Installation/uninstallation
 
-install: all install-bin install-include install-lib install-man
+install: all install-bin install-include install-lib
+install-doc: install-man
 install-bin: $(INSTALLABLE)
 	$(INSTALL) -d "$(DESTDIR)$(BINDIR)"
 	$(INSTALL) $^ "$(DESTDIR)$(BINDIR)"
@@ -99,9 +101,9 @@ install-include:
 install-lib:
 	$(INSTALL) -d "$(DESTDIR)$(LIBDIR)"
 	$(INSTALL) -m 644 libgif.a "$(DESTDIR)$(LIBDIR)/libgif.a"
-	$(INSTALL) -m 755 libgif.so "$(DESTDIR)$(LIBDIR)/libgif.so.$(LIBVER)"
-	ln -sf libgif.so.$(LIBVER) "$(DESTDIR)$(LIBDIR)/libgif.so.$(LIBMAJOR)"
-	ln -sf libgif.so.$(LIBMAJOR) "$(DESTDIR)$(LIBDIR)/libgif.so"
+	$(INSTALL) -m 755 libgif.dylib "$(DESTDIR)$(LIBDIR)/libgif.so.$(LIBVER)"
+	ln -sf libgif.dylib.$(LIBVER) "$(DESTDIR)$(LIBDIR)/libgif.so.$(LIBMAJOR)"
+	ln -sf libgif.dylib.$(LIBMAJOR) "$(DESTDIR)$(LIBDIR)/libgif.so"
 install-man:
 	$(INSTALL) -d "$(DESTDIR)$(MANDIR)/man1"
 	$(INSTALL) -m 644 doc/*.1 "$(DESTDIR)$(MANDIR)/man1"
